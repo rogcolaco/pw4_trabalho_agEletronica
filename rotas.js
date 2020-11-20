@@ -1,14 +1,50 @@
 var express = require('express');
 var app = express();
+//app = require("view");
 
 /*ROTAS TELA DE LOGIN*/
 
 app.get("/", (req, res) => {
-    res.send("rota para a página de login");
+    //res.send(/view/login.html);
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="PT_BR">
+        
+        <head>
+            <meta charset="UTF-8">
+            <title>Bem vindo a sua agenda eletrônica</title>
+        </head>
+        <body>
+            <h1>Acesse sua agenda eletrônica</h1>
+            <form method=post action=#>
+                <p> Login:<input type=text name=login /> </p> 
+                <p> Senha:<input type=password name=password /> </p> 
+                <p> <input type=submit value="Login"> </p> 
+                <p><a href="/cadastrarUsuario">Cadastre-se</a></p>
+            </form>
+        </body>
+        </html>
+    `);
 });
 
-app.get("/cadastrarUsuário", (req, res) => {
-    res.send("rota para a página de cadastro de novo usuário");
+app.get("/cadastrarUsuario", (req, res) => {
+    res.send(`
+    <!DOCTYPE html>
+        <html lang="PT_BR">
+        <head>
+            <meta charset="UTF-8">
+            <title>Bem vindo a sua agenda eletrônica</title>
+        </head>
+        <body>
+            <h1>Por favor preencha os campos abaixo</h1>
+            <form method=post action=registerUser>
+                <p> Login:<input type=text name=login /> </p> 
+                <p> Senha:<input type=password name=password /> </p> 
+                <p> <input type=submit value="Salvar novo usuário"> </p> 
+            </form>
+        </body>
+        </html>
+    `);
 });
 
 app.post("/minhaAgenda", (req, res) => {
