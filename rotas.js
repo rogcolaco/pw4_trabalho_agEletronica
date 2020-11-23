@@ -1,11 +1,10 @@
 var express = require('express');
 var app = express();
-//app = require("view");
 
 /*ROTAS TELA DE LOGIN*/
 
 app.get("/", (req, res) => {
-    //res.send(/view/login.html);
+
     res.send(`
         <!DOCTYPE html>
         <html lang="PT_BR">
