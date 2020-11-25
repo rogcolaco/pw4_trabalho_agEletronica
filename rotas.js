@@ -1,6 +1,11 @@
 var express = require('express');
 var app = express();
 
+const { body, validationResult } = require("express-validator");
+const { read } = require("fs");
+
+app.use(express.urlencoded({ extended: true }));
+
 /*ROTAS TELA DE LOGIN*/
 
 app.get("/", (req, res) => {
