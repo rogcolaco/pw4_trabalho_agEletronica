@@ -6,6 +6,9 @@ const { read } = require("fs");
 
 app.use(express.urlencoded({ extended: true }));
 
+const banco = require("./conexao")
+
+
 /*ROTAS TELA DE LOGIN*/
 
 app.get("/", (req, res) => {
@@ -51,6 +54,83 @@ app.get("/cadastrarUsuario", (req, res) => {
     `);
 });
 
+//admin recebe 0 ou 1
+app.post("/adicionarUsuario", [
+        body("nome", "O nome é obrigatório.").trim().isLength({ min: 3, max: 80 }),
+        body("login", "O login é obrigatório.").trim().isLength({ min: 3, max: 45 }),
+        body("senha", "A senha precisa ter pelo menos 3 dígitos.").trim().isLength({ min: 3, max: 45 }),
+        body("admin").trim(),
+    ],
+    async (req, res) => {
+        console.log("rota utilizada quando o usuário confirmar dados preenchidos em relação novo usuário");
+        const erros = validationResult(req);
+        if (!erros.isEmpty()) {
+            res.send(erros.array())
+        } else {
+            const resultado = await banco.insereUsuario({
+                nome: req.body.nome,
+                login: req.body.login,
+                senha: req.body.senha,
+                admin: req.body.admin,
+            });
+            res.send(resultado);
+        }
+    });
+
+app.put("/alteraUsuario", [
+        body("id", "O id do usuário é obrigatório.").trim().isLength({ min: 1 }),
+        body("nome", "O nome é obrigatório.").trim().isLength({ min: 3, max: 80 }),
+        body("login", "O login é obrigatório.").trim().isLength({ min: 3, max: 45 }),
+        body("senha", "A senha precisa ter pelo menos 3 dígitos.").trim().isLength({ min: 3, max: 45 }),
+        body("admin").trim(),
+    ],
+    async (req, res) => {
+    console.log("rota utilizada quando o usuário alterar dados preenchidos de um usuário");
+    const erros = validationResult(req);
+    if (!erros.isEmpty()) {
+        res.send(erros.array())
+    } else {
+        const resultado = await banco.alteraUsuario({
+            id: req.body.id,
+            nome: req.body.nome,
+            login: req.body.login,
+            senha: req.body.senha,
+            admin: req.body.admin,
+        });
+        res.send(resultado);
+    }
+});
+
+app.delete("/excluiUsuario", [
+        body("id", "O id do usuário é obrigatório.").trim().isLength({ min: 1 }),        
+    ],
+    async (req, res) => {
+    console.log("rota utilizada quando o usuário excluir um usuário");
+    const erros = validationResult(req);
+    if (!erros.isEmpty()) {
+        res.send(erros.array())
+    } else {
+        const resultado = await banco.excluiUsuario(req.body.id);
+        res.send(resultado);
+    }
+});
+
+app.get("/selecionaUsuario/:id?", async (req, res) => {
+    console.log("rota utilizada quando o usuário selecionar um usuário");
+    if (req.params.id) {
+        const resultado = await banco.selecionaUsuario(req.params.id);
+        res.send(resultado);
+    } else {
+        res.send("Favor informar um id de usuário!")
+    }
+});
+
+app.get("/listaUsuarios", async (req, res) => {
+    console.log("rota utilizada quando o usuário deseja listar todos os usuário.");
+    const resultado = await banco.listaTodosUsuarios();
+    res.send(resultado);
+});
+
 app.post("/minhaAgenda", (req, res) => {
     res.send("rota utilizada para login caso o usuário já possua cadastro ---- preencher a tela de login e pedir para logar");
 });
@@ -61,22 +141,57 @@ app.get("/logout", (req, res) => {
 
 /*ROTAS NAVEGAÇÃO ENTRE AGENDA DE CONTATOS E COMPROMISSO*/
 
-app.get("/meusCotatos", (req, res) => {
-    res.send("rota utilizada caso o usuário opte por acessar e listar sua agenda de contatos");
+app.get("/meusContatos/:id?", async (req, res) => {
+    console.log("rota utilizada caso o usuário opte por acessar e listar sua agenda de contatos");
+    if (req.params.id) {
+        const resultado = await banco.listaTodosContatos(req.params.id);
+        res.send(resultado);
+    } else {
+        res.send("Favor informar um id de usuário!")
+    }
 });
 
-app.get("/meusCompromissos", (req, res) => {
-    res.send("rota utilizada caso o usuário opte por acessar e listar sua agenda de compromissos");
+app.get("/meusCompromissos/:id?", async (req, res) => {
+    console.log("rota utilizada caso o usuário opte por acessar e listar sua agenda de compromissos");
+    if (req.params.id) {
+        const resultado = await banco.listaTodosCompromissos(req.params.id);
+        res.send(resultado);
+    } else {
+        res.send("Favor informar um id de usuário!")
+    }
 });
 
 /*ROTAS CRUD COMPROMISSOS*/
 
 app.get("/novoCompromisso", (req, res) => {
-    res.send("rota utilizada caso o usuário opte por criar novo compromisso");
+    res.send("rota utilizada caso o usuário opte por criar novo compromisso. Retorna tela com form.");
 });
 
-app.post("/adicionarCompromisso", (req, res) => {
-    res.send("rota utilizada quando o usuário confirmar dados preenchidos em relação novo compromisso");
+//exemplo de data '2011-12-18 13:17:17'
+app.post("/adicionarCompromisso", [
+        body("data", "A data é obrigatória)").trim().isLength({ min: 19 }),
+        body("obs").trim(),
+        body("participantes").trim(),
+        body("endereco").trim(),
+        body("status").trim(),
+        body("user_id").trim().isLength({ min: 1 }),
+    ],
+    async (req, res) => {
+        console.log("rota utilizada quando o usuário confirmar dados preenchidos em relação novo compromisso");
+        const erros = validationResult(req);
+        if (!erros.isEmpty()) {
+            res.send(erros.array())
+        } else {
+            const resultado = await banco.insereCompromisso({
+                data: req.body.data,
+                obs: req.body.obs,
+                participantes: req.body.participantes,
+                endereco: req.body.endereco,
+                status: req.body.status,
+                user_id: req.body.user_id,
+            });
+            res.send(resultado);
+        }
 });
 
 app.get("/selecionaCompromisso", (req, res) => {
