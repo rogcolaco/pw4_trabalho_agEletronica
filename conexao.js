@@ -15,7 +15,7 @@ async function conecta() {
 async function listaTodosUsuarios() {
     console.log("Listando todos usuários");
     const conexaoAtiva = await conecta();
-    const [resultado] = await conexaoAtiva.query("SELECT * FROM usuarios");
+    const [resultado] = await conexaoAtiva.query("SELECT * FROM usuario");
     return resultado;
 }
 
@@ -49,10 +49,10 @@ async function alteraUsuario(usuario) {
 }
 
 //contato
-async function listaTodosContatos() {
-    console.log("Listando todos os contatos");
+async function listaTodosContatos(user_id) {
+    console.log("Listando todos os contatos do usuário com id: " + user_id);
     const conexaoAtiva = await conecta();
-    const [resultado] = await conexaoAtiva.query("SELECT * FROM contatos");
+    const [resultado] = await conexaoAtiva.query("SELECT * FROM contato WHERE user_id=?;", [user_id]);
     return resultado;
 }
 
@@ -86,10 +86,10 @@ async function alteraContato(usuario) {
 }
 
 //compromisso
-async function listaTodosCompromissos() {
-    console.log("Listando todos os compromissos");
+async function listaTodosCompromissos(user_id) {
+    console.log("Listando todos os compromissos do usuário com id: " + user_id);
     const conexaoAtiva = await conecta();
-    const [resultado] = await conexaoAtiva.query("SELECT * FROM compromisso");
+    const [resultado] = await conexaoAtiva.query("SELECT * FROM compromisso WHERE user_id=?;", [user_id]);
     return resultado;
 }
 
