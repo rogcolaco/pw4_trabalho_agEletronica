@@ -59,7 +59,7 @@ async function listaTodosContatos(user_id) {
 async function selecionaContato(id) {
     console.log(`Selecionado o contato com id: ${id}`);
     const conexaoAtiva = await conecta();
-    const [resultado] = await conexaoAtiva.query("SELECT * FROM contatos WHERE id=?;", [id]);
+    const [resultado] = await conexaoAtiva.query("SELECT * FROM contato WHERE id=?;", [id]);
     return resultado;
 }
 
@@ -77,10 +77,10 @@ async function excluiContato(id) {
     return await conexaoAtiva.query("DELETE FROM contato WHERE id=?", [id]);
 }
 
-async function alteraContato(usuario) {
-    console.log("Alterando usuário: " +  usuario.nome);
+async function alteraContato(contato) {
+    console.log("Alterando usuário: " + contato.nome);
     const conexaoAtiva = await conecta();
-    const sql = "UPDATE usuario SET nome = ?, email = ?, telefone = ?, endereco = ?, user_id = ? WHERE id = ?;";
+    const sql = "UPDATE contato SET nome = ?, email = ?, telefone = ?, endereco = ?, user_id = ? WHERE id = ?;";
     const parametros = [contato.nome, contato.email, contato.telefone, contato.endereco, contato.user_id, contato.id];
     return await conexaoAtiva.query(sql, parametros);
 }
@@ -117,7 +117,7 @@ async function excluiCompromisso(id) {
 async function alteraCompromisso(compromisso) {
     console.log("Alterando compromisso: " +  compromisso.id);
     const conexaoAtiva = await conecta();
-    const sql = "UPDATE usuario SET data = ?, obs = ?, participantes = ?, endereco = ?,  status = ?, user_id = ? WHERE id = ?;";
+    const sql = "UPDATE compromisso SET data = ?, obs = ?, participantes = ?, endereco = ?,  status = ?, user_id = ? WHERE id = ?;";
     const parametros = [compromisso.data, compromisso.obs, compromisso.participantes, compromisso.endereco, compromisso.status, compromisso.user_id, compromisso.id];
     return await conexaoAtiva.query(sql, parametros);
 }
