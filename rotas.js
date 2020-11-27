@@ -292,7 +292,7 @@ app.put("/alterarContato", [
         }
 });
 
-app.get("/excluirContato", [
+app.delete("/excluirContato", [
         body("id", "O id do compromisso é obrigatório.").trim().isLength({ min: 1 }),        
     ],
     async (req, res) => {
