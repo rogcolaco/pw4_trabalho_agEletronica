@@ -82,7 +82,7 @@ app.get("/novoContato", (req, res) => {
         <html lang="PT_BR">
         <head>
             <meta charset="UTF-8">
-            <title>Bem vindo a sua agenda eletrônica</title>
+            <title>Adicionar Contato - agenda eletrônica</title>
         </head>
         <body>
             <!-- Indicar o nome do usuário -->
@@ -101,7 +101,27 @@ app.get("/novoContato", (req, res) => {
 });
 
 app.get("/novoCompromisso", (req, res) => {
-    res.send("rota utilizada caso o usuário opte por criar novo compromisso. Retorna tela com form.");
+    res.send(`
+    <!DOCTYPE html>
+        <html lang="PT_BR">
+        <head>
+            <meta charset="UTF-8">
+            <title>Adicionar Compromisso - agenda eletrônica</title>
+        </head>
+        <body>
+            <!-- Indicar o nome do usuário -->
+            <p> Bem vindo: #### | <a href=minhaAgenda>Voltar</a>  |  <a href=logout>Sair</a> <p>
+            <h1>Informe os dados do Novo Compromisso</h1>
+            <form method=post action=adicionarCompromisso>
+                <p> Local: <input type=text name=local /> </p> 
+                <p> Data: <input type=date name=date /> </p>  
+                <p> Contato: <input type=text name=contact /> </p> 
+                <p> Descrição: <input type=text width="200" height="100" name=description /> </p> 
+                <p> <input type=submit value="Salvar novo compromisso"> </p> 
+            </form>
+        </body>
+        </html>
+    `);
 });
 
 app.get("/logout", (req, res) => {
