@@ -55,7 +55,25 @@ app.get("/cadastrarUsuario", (req, res) => {
 });
 
 app.post("/minhaAgenda", (req, res) => {
-    res.send("rota utilizada para login caso o usuário já possua cadastro ---- preencher a tela de login e pedir para logar");
+    res.send(`
+    <!DOCTYPE html>
+        <html lang="PT_BR">
+        <head>
+            <meta charset="UTF-8">
+            <title>Bem vindo a sua agenda eletrônica</title>
+        </head>
+        <body>
+            <!-- Indicar o nome do usuário -->
+            <p> Seja bem vindo, #### | <a href=logout>Sair</a>	</p>
+            <h1>Menu Principal</h1>
+            <p> <a href=meusContatos>Meus Contatos</a> </p>
+            <p> <a href=meusCompromissos>Meus Compromissos</a> </p>
+            <hr>
+            <p> <a href=novoContato>Adicionar Novo Contato</a> </p>
+            <p> <a href=novoCompromisso>Adicionar Novo Compromisso</a> </p>
+        </body>
+        </html>
+    `);
 });
 
 app.get("/logout", (req, res) => {
