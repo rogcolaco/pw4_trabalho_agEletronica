@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
         </head>
         <body>
             <h1>Acesse sua agenda eletrônica</h1>
+            <!-- DEFINIR UMA ROTA PARA TRATAMENTO E VERIFICAÇÃO DE DADOS DE LOGIN -->
             <form method=post action=#>
                 <p> Login:<input type=text name=login /> </p> 
                 <p> Senha:<input type=password name=password /> </p> 
@@ -63,7 +64,7 @@ app.post("/minhaAgenda", (req, res) => {
             <title>Bem vindo a sua agenda eletrônica</title>
         </head>
         <body>
-            <!-- Indicar o nome do usuário -->
+            <!-- INDICAR O NOME DO USUÁRIO COM SESSÃO ATIVA -->
             <p> Seja bem vindo, #### | <a href=logout>Sair</a>	</p>
             <h1>Menu Principal</h1>
             <p> <a href=meusContatos>Meus Contatos</a> </p>
@@ -85,7 +86,7 @@ app.get("/novoContato", (req, res) => {
             <title>Adicionar Contato - agenda eletrônica</title>
         </head>
         <body>
-            <!-- Indicar o nome do usuário -->
+            <!-- INDICAR O NOME DO USUÁRIO COM SESSÃO ATIVA -->
             <p> Bem vindo: #### | <a href=minhaAgenda>Voltar</a>  |  <a href=logout>Sair</a> <p>
             <h1>Informe os dados do Novo contato</h1>
             <form method=post action=adicionarContato>
@@ -109,7 +110,7 @@ app.get("/novoCompromisso", (req, res) => {
             <title>Adicionar Compromisso - agenda eletrônica</title>
         </head>
         <body>
-            <!-- Indicar o nome do usuário -->
+            <!-- INDICAR O NOME DO USUÁRIO COM SESSÃO ATIVA -->
             <p> Bem vindo: #### | <a href=minhaAgenda>Voltar</a>  |  <a href=logout>Sair</a> <p>
             <h1>Informe os dados do Novo Compromisso</h1>
             <form method=post action=adicionarCompromisso>
@@ -125,7 +126,27 @@ app.get("/novoCompromisso", (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-    res.send("rota utilizada para logout");
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="PT_BR">
+        
+        <head>
+            <meta charset="UTF-8">
+            <title>Bem vindo a sua agenda eletrônica</title>
+        </head>
+        <body>
+            <p>Sessão Encerrada com Sucesso!</p>
+            <h1>Acesse sua agenda eletrônica</h1>
+            <!-- DEFINIR UMA ROTA PARA TRATAMENTO E VERIFICAÇÃO DE DADOS DE LOGIN -->
+            <form method=post action=#>
+                <p> Login:<input type=text name=login /> </p> 
+                <p> Senha:<input type=password name=password /> </p> 
+                <p> <input type=submit value="Login"> </p> 
+                <p><a href="/cadastrarUsuario">Cadastre-se</a></p>
+            </form>
+        </body>
+        </html>
+    `);
 });
 
 //*ROTAS - CRUD DE USUÁRIOS
