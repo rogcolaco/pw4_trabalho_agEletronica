@@ -76,16 +76,36 @@ app.post("/minhaAgenda", (req, res) => {
     `);
 });
 
-app.get("/logout", (req, res) => {
-    res.send("rota para que usuário logado possa sair do sistema");
+app.get("/novoContato", (req, res) => {
+    res.send(`
+    <!DOCTYPE html>
+        <html lang="PT_BR">
+        <head>
+            <meta charset="UTF-8">
+            <title>Bem vindo a sua agenda eletrônica</title>
+        </head>
+        <body>
+            <!-- Indicar o nome do usuário -->
+            <p> Bem vindo: #### | <a href=minhaAgenda>Voltar</a>  |  <a href=logout>Sair</a> <p>
+            <h1>Informe os dados do Novo contato</h1>
+            <form method=post action=adicionarContato>
+                <p> Nome: <input type=text name=name /> </p> 
+                <p> Endereço: <input type=text name=adress /> </p>  
+                <p> Telefone: <input type=text name=phone /> </p> 
+                <p> E-mail: <input type=text name=email /> </p> 
+                <p> <input type=submit value="Salvar novo contato"> </p> 
+            </form>
+        </body>
+        </html>
+    `);
 });
 
 app.get("/novoCompromisso", (req, res) => {
     res.send("rota utilizada caso o usuário opte por criar novo compromisso. Retorna tela com form.");
 });
 
-app.get("/novoContato", (req, res) => {
-    res.send("rota utilizada caso o usuário opte por criar novo contato");
+app.get("/logout", (req, res) => {
+    res.send("rota utilizada para logout");
 });
 
 //*ROTAS - CRUD DE USUÁRIOS
