@@ -12,6 +12,16 @@ async function conecta() {
 }
 
 //usuarios
+async function login(usuario) {
+    console.log("Verificando login");
+    const conexaoAtiva = await conecta();
+    const [resultado] = await conexaoAtiva.query("SELECT * FROM usuario WHERE login = ?;", [usuario.login]);
+    if (resultado.length == 0) { return "Usuário não cadastrado!" }
+    if (resultado[0].senha != usuario.senha) { return "Senha informada não confere!"}
+    return response = {status: "conectado", admin: resultado[0].admin == 1 ? true : false  };
+}
+
+//usuarios
 async function listaTodosUsuarios() {
     console.log("Listando todos usuários");
     const conexaoAtiva = await conecta();
@@ -29,6 +39,8 @@ async function selecionaUsuario(id) {
 async function insereUsuario(usuario) {
     console.log("Inserindo usuário: " +  usuario.nome);
     const conexaoAtiva = await conecta();
+    const [resultado] = await conexaoAtiva.query("SELECT * FROM usuario WHERE login = ?;", [usuario.login]);
+    if (resultado.length > 0 ) { return "Já existe um usuário com o login informado!"}
     const sql = "INSERT INTO usuario(nome, login, senha, admin) VALUES (?,?,?,?);";
     const parametros = [usuario.nome, usuario.login, usuario.senha, usuario.admin];
     return await conexaoAtiva.query(sql, parametros);
@@ -41,10 +53,10 @@ async function excluiUsuario(id) {
 }
 
 async function alteraUsuario(usuario) {
-    console.log("Alterando usuário: " +  usuario.nome);
-    const conexaoAtiva = await conecta();
-    const sql = "UPDATE usuario SET nome = ?, login = ?, senha = ?, admin = ? WHERE id = ?;";
-    const parametros = [usuario.nome, usuario.login, usuario.senha, usuario.admin, usuario.id];
+    console.log("Alterando usuário: " + usuario.nome);    
+    const conexaoAtiva = await conecta();    
+    const sql = "UPDATE usuario SET nome = ?, senha = ?, admin = ? WHERE id = ?;";
+    const parametros = [usuario.nome, usuario.senha, usuario.admin, usuario.id];
     return await conexaoAtiva.query(sql, parametros);
 }
 
@@ -122,7 +134,7 @@ async function alteraCompromisso(compromisso) {
     return await conexaoAtiva.query(sql, parametros);
 }
 
-module.exports = {
+module.exports = { login,
     listaTodosUsuarios, selecionaUsuario, insereUsuario, excluiUsuario, alteraUsuario,
     listaTodosContatos, selecionaContato, insereContato, excluiContato, alteraContato,
     listaTodosCompromissos, selecionaCompromisso, insereCompromisso, excluiCompromisso, alteraCompromisso,

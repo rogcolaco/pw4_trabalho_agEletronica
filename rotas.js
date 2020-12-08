@@ -149,6 +149,26 @@ app.get("/logout", (req, res) => {
     `);
 });
 
+//*ROTAS - Login
+
+app.post("/login", [
+        body("login", "O login é obrigatório.").trim().isLength({ min: 3, max: 45 }),
+        body("senha", "A senha precisa ter pelo menos 3 dígitos.").trim().isLength({ min: 3, max: 45 }),
+    ],
+    async (req, res) => {
+        console.log("rota utilizada para logar no sistema");
+        const erros = validationResult(req);
+        if (!erros.isEmpty()) {
+            res.send(erros.array())
+        } else {
+            const resultado = await banco.login({
+                login: req.body.login,
+                senha: req.body.senha,
+            });
+            res.send(resultado);
+        }
+    });
+
 //*ROTAS - CRUD DE USUÁRIOS
 
 //admin recebe 0 ou 1
@@ -177,7 +197,6 @@ app.post("/adicionarUsuario", [
 app.put("/alterarUsuario", [
         body("id", "O id do usuário é obrigatório.").trim().isLength({ min: 1 }),
         body("nome", "O nome é obrigatório.").trim().isLength({ min: 3, max: 80 }),
-        body("login", "O login é obrigatório.").trim().isLength({ min: 3, max: 45 }),
         body("senha", "A senha precisa ter pelo menos 3 dígitos.").trim().isLength({ min: 3, max: 45 }),
         body("admin").trim(),
     ],
@@ -190,7 +209,6 @@ app.put("/alterarUsuario", [
         const resultado = await banco.alteraUsuario({
             id: req.body.id,
             nome: req.body.nome,
-            login: req.body.login,
             senha: req.body.senha,
             admin: req.body.admin,
         });
