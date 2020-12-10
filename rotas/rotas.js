@@ -165,7 +165,7 @@ module.exports = app => {
     app.route("/adicionarUsuario").post([
             body("nome", "O nome é obrigatório.").trim().isLength({ min: 3, max: 80 }),
             body("login", "O login é obrigatório.").trim().isLength({ min: 3, max: 45 }),
-            body("senha", "A senha precisa ter pelo menos 3 dígitos.").trim().isLength({ min: 3, max: 45 }),
+            body("senha", "A senha precisa ter no mínimo 3 dígitos e no máximo 45.").trim().isLength({ min: 3, max: 45 }),
             body("admin").trim(),
         ],
         async (req, res) => {
@@ -190,7 +190,7 @@ module.exports = app => {
         .put([
             body("id", "O id do usuário é obrigatório.").trim().isLength({ min: 1 }),
             body("nome", "O nome é obrigatório.").trim().isLength({ min: 3, max: 80 }),
-            body("senha", "A senha precisa ter pelo menos 3 dígitos.").trim().isLength({ min: 3, max: 45 }),
+            body("senha", "A senha precisa ter no mínimo 3 dígitos e no máximo 45.").trim().isLength({ min: 3, max: 45 }),
             body("admin").trim(),
             ],
             async (req, res) => {
@@ -234,7 +234,7 @@ module.exports = app => {
             const resultado = await banco.selecionaUsuario(req.params.id);
             res.send(resultado);
         } else {
-            res.send("Favor informar um id de usuário!")
+            res.send("Favor informar um id de usuário válida!")
         }
     });
 
@@ -332,7 +332,7 @@ module.exports = app => {
             const resultado = await banco.selecionaCompromisso(req.params.id);
             res.send(resultado);
         } else {
-            res.send("Favor informar um id de compromisso!")
+            res.send("Favor informar um id de compromisso válido!")
         }
     });
 
@@ -344,7 +344,7 @@ module.exports = app => {
             const resultado = await banco.listaTodosCompromissos(req.params.id);
             res.send(resultado);
         } else {
-            res.send("Favor informar um id de usuário!")
+            res.send("Favor informar um id de usuário válida!")
         }
     });
 
@@ -427,7 +427,7 @@ module.exports = app => {
             const resultado = await banco.selecionaContato(req.params.id);
             res.send(resultado);
         } else {
-            res.send("Favor informar o id de um contato!")
+            res.send("Favor informar o id de um contato válido!")
         }
     });
 
@@ -439,7 +439,7 @@ module.exports = app => {
             const resultado = await banco.listaTodosContatos(req.params.id);
             res.send(resultado);
         } else {
-            res.send("Favor informar um id de usuário!")
+            res.send("Favor informar um id de usuário válido!")
         }
     });
 
