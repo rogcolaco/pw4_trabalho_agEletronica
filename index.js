@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 const consign = require('consign')
 
-  app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 consign()
     .include('./config/passport.js')
