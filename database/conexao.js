@@ -1,13 +1,15 @@
+require('dotenv').config();
+
 async function conecta() {
     const banco = require("mysql2/promise");
     const con = await banco.createConnection({
-        host: "localhost",
-        port: 3306,
-        user: "root",
-        password: "root",
-        database: "pw4_agenda"
+        host: process.env.DB_HOST,
+        port: process.env.PORT,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DATABASE
     });
-    console.log("Banco de dados conectado");
+    console.log("Banco de dados conectado na porta: " + process.env.DB_PORTA + " no usuário: " + process.env.DB_USER);
     return con;
 }
 
