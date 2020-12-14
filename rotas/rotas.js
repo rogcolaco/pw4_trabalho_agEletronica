@@ -9,29 +9,12 @@ module.exports = app => {
     /*ROTAS DE TELAS*/
 
     app.route("/").get((req, res) => {
-
         res.sendFile(path.resolve('./pages/login.html'));
     });
 
     app.route("/cadastrarUsuario")
         .get((req, res) => {
-            res.send(`
-            <!DOCTYPE html>
-                <html lang="PT_BR">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Bem vindo a sua agenda eletrônica</title>
-                </head>
-                <body>
-                    <h1>Por favor preencha os campos abaixo</h1>
-                    <form method=post action=registerUser>
-                        <p> Login:<input type=text name=login /> </p> 
-                        <p> Senha:<input type=password name=password /> </p> 
-                        <p> <input type=submit value="Salvar novo usuário"> </p> 
-                    </form>
-                </body>
-                </html>
-            `);
+            res.sendFile(path.resolve('./pages/cadastroUsuario.html'));
     });
 
     app.route("/minhaAgenda").
