@@ -2,33 +2,15 @@
 const { body, validationResult } = require("express-validator");
 const { read } = require("fs");
 const banco = require("../database/conexao")
+var path = require("path");
 
 module.exports = app => {
-  
+
     /*ROTAS DE TELAS*/
 
     app.route("/").get((req, res) => {
 
-        res.send(`
-            <!DOCTYPE html>
-            <html lang="PT_BR">
-            
-            <head>
-                <meta charset="UTF-8">
-                <title>Bem vindo a sua agenda eletrônica</title>
-            </head>
-            <body>
-                <h1>Acesse sua agenda eletrônica</h1>
-                <!-- DEFINIR UMA ROTA PARA TRATAMENTO E VERIFICAÇÃO DE DADOS DE LOGIN -->
-                <form method=post action=#>
-                    <p> Login:<input type=text name=login /> </p> 
-                    <p> Senha:<input type=password name=password /> </p> 
-                    <p> <input type=submit value="Login"> </p> 
-                    <p><a href="/cadastrarUsuario">Cadastre-se</a></p>
-                </form>
-            </body>
-            </html>
-        `);
+        res.sendFile(path.resolve('./pages/login.html'));
     });
 
     app.route("/cadastrarUsuario")
