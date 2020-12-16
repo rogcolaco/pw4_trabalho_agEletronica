@@ -23,7 +23,7 @@ async function login(usuario) {
     const conexaoAtiva = await conecta();
     const [resultado] = await conexaoAtiva.query("SELECT * FROM usuario WHERE login = ?;", [usuario.login]);
     // if (resultado.length == 0) { return 400 }
-    // if (resultado[0].senha != usuario.senha) { return "Senha informada não confere!"}    
+    // if (resultado[0].senha != usuario.senha) { return "Senha informada não confere!"}
     // return response = {status: "conectado", admin: resultado[0].admin == 1 ? true : false  };
     return resultado[0];
 }
@@ -63,8 +63,8 @@ async function excluiUsuario(id) {
 }
 
 async function alteraUsuario(usuario) {
-    console.log("Alterando usuário: " + usuario.nome);    
-    const conexaoAtiva = await conecta();    
+    console.log("Alterando usuário: " + usuario.nome);
+    const conexaoAtiva = await conecta();
     const [resultado] = await conexaoAtiva.query("SELECT * FROM usuario WHERE id=?;", [usuario.id]);
     if (resultado.length == 0) {return "Não existe usuário com o ID informado!"}
     const sql = "UPDATE usuario SET nome = ?, senha = ?, admin = ? WHERE id = ?;";
@@ -121,7 +121,7 @@ async function listaTodosCompromissos(user_id) {
     console.log("Listando todos os compromissos do usuário com id: " + user_id);
     const conexaoAtiva = await conecta();
     const [resultado] = await conexaoAtiva.query("SELECT * FROM usuario WHERE id=?;", [user_id]);
-    if (resultado.length == 0) { return "Não existe usuário com o ID informado!" }    
+    if (resultado.length == 0) { return "Não existe usuário com o ID informado!" }
     const [resultado2] = await conexaoAtiva.query("SELECT * FROM compromisso WHERE user_id=?;", [user_id]);
     return resultado2;
 }
@@ -130,7 +130,7 @@ async function selecionaCompromisso(id) {
     console.log(`Selecionado o compromisso com id: ${id}`);
     const conexaoAtiva = await conecta();
     const [resultado] = await conexaoAtiva.query("SELECT * FROM compromisso WHERE id=?;", [id]);
-    if (resultado.length == 0) { return "Não existe compromisso com o ID informado!" } 
+    if (resultado.length == 0) { return "Não existe compromisso com o ID informado!" }
     return resultado[0];
 }
 
@@ -146,7 +146,7 @@ async function excluiCompromisso(id) {
     console.log(`Apagando o compromisso com id:${id}`);
     const conexaoAtiva = await conecta();
     const [resultado] = await conexaoAtiva.query("SELECT * FROM compromisso WHERE id=?;", [id]);
-    if (resultado.length == 0) { return "Não existe compromisso com o ID informado!" } 
+    if (resultado.length == 0) { return "Não existe compromisso com o ID informado!" }
     return await conexaoAtiva.query("DELETE FROM compromisso WHERE id=?", [id]);
 }
 
@@ -154,7 +154,7 @@ async function alteraCompromisso(compromisso) {
     console.log("Alterando compromisso: " +  compromisso.id);
     const conexaoAtiva = await conecta();
     const [resultado] = await conexaoAtiva.query("SELECT * FROM compromisso WHERE id=?;", [compromisso.id]);
-    if (resultado.length == 0) { return "Não existe compromisso com o ID informado!" } 
+    if (resultado.length == 0) { return "Não existe compromisso com o ID informado!" }
     const sql = "UPDATE compromisso SET data = ?, obs = ?, participantes = ?, endereco = ?,  status = ?, user_id = ? WHERE id = ?;";
     const parametros = [compromisso.data, compromisso.obs, compromisso.participantes, compromisso.endereco, compromisso.status, compromisso.user_id, compromisso.id];
     return await conexaoAtiva.query(sql, parametros);
