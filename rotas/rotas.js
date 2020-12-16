@@ -56,11 +56,11 @@ module.exports = app => {
                     <p> Bem vindo: #### | <a href=minhaAgenda>Voltar</a>  |  <a href=logout>Sair</a> <p>
                     <h1>Informe os dados do Novo contato</h1>
                     <form method=post action=adicionarContato>
-                        <p> Nome: <input type=text name=name /> </p> 
-                        <p> Endereço: <input type=text name=adress /> </p>  
-                        <p> Telefone: <input type=text name=phone /> </p> 
-                        <p> E-mail: <input type=text name=email /> </p> 
-                        <p> <input type=submit value="Salvar novo contato"> </p> 
+                        <p> Nome: <input type=text name=name /> </p>
+                        <p> Endereço: <input type=text name=adress /> </p>
+                        <p> Telefone: <input type=text name=phone /> </p>
+                        <p> E-mail: <input type=text name=email /> </p>
+                        <p> <input type=submit value="Salvar novo contato"> </p>
                     </form>
                 </body>
                 </html>
@@ -82,11 +82,11 @@ module.exports = app => {
                     <p> Bem vindo: #### | <a href=minhaAgenda>Voltar</a>  |  <a href=logout>Sair</a> <p>
                     <h1>Informe os dados do Novo Compromisso</h1>
                     <form method=post action=adicionarCompromisso>
-                        <p> Local: <input type=text name=local /> </p> 
-                        <p> Data: <input type=date name=date /> </p>  
-                        <p> Contato: <input type=text name=contact /> </p> 
-                        <p> Descrição: <input type=text width="200" height="100" name=description /> </p> 
-                        <p> <input type=submit value="Salvar novo compromisso"> </p> 
+                        <p> Local: <input type=text name=local /> </p>
+                        <p> Data: <input type=date name=date /> </p>
+                        <p> Contato: <input type=text name=contact /> </p>
+                        <p> Descrição: <input type=text width="200" height="100" name=description /> </p>
+                        <p> <input type=submit value="Salvar novo compromisso"> </p>
                     </form>
                 </body>
                 </html>
@@ -99,7 +99,7 @@ module.exports = app => {
             res.send(`
                 <!DOCTYPE html>
                 <html lang="PT_BR">
-                
+
                 <head>
                     <meta charset="UTF-8">
                     <title>Bem vindo a sua agenda eletrônica</title>
@@ -109,9 +109,9 @@ module.exports = app => {
                     <h1>Acesse sua agenda eletrônica</h1>
                     <!-- DEFINIR UMA ROTA PARA TRATAMENTO E VERIFICAÇÃO DE DADOS DE LOGIN -->
                     <form method=post action=#>
-                        <p> Login:<input type=text name=login /> </p> 
-                        <p> Senha:<input type=password name=password /> </p> 
-                        <p> <input type=submit value="Login"> </p> 
+                        <p> Login:<input type=text name=login /> </p>
+                        <p> Senha:<input type=password name=password /> </p>
+                        <p> <input type=submit value="Login"> </p>
                         <p><a href="/cadastrarUsuario">Cadastre-se</a></p>
                     </form>
                 </body>
@@ -178,7 +178,7 @@ module.exports = app => {
     app.route("/excluirUsuario")
         .all(app.config.passport.authenticate())
         .delete([
-            body("id", "O id do usuário é obrigatório.").trim().isLength({ min: 1 }),        
+            body("id", "O id do usuário é obrigatório.").trim().isLength({ min: 1 }),
         ],
         async (req, res) => {
         console.log("rota utilizada quando o usuário excluir um usuário");
@@ -276,7 +276,7 @@ module.exports = app => {
     app.route("/excluirCompromisso")
         .all(app.config.passport.authenticate())
         .delete([
-            body("id", "O id do compromisso é obrigatório.").trim().isLength({ min: 1 }),        
+            body("id", "O id do compromisso é obrigatório.").trim().isLength({ min: 1 }),
         ],
         async (req, res) => {
         console.log("rota utilizada quando o usuário excluir um compromisso");
@@ -371,7 +371,7 @@ module.exports = app => {
     app.route("/excluirContato")
         .all(app.config.passport.authenticate())
         .delete([
-            body("id", "O id do compromisso é obrigatório.").trim().isLength({ min: 1 }),        
+            body("id", "O id do compromisso é obrigatório.").trim().isLength({ min: 1 }),
         ],
         async (req, res) => {
         console.log("rota utilizada caso o usuário opte por deletar um contato selecionado");
