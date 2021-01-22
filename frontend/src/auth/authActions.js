@@ -31,7 +31,6 @@ function submit(values, url) {
             e.response.data.forEach((error) => toastr.error("Erro", error.msg));
           }
           if (typeof e.response.data == "string") {
-            console.log("entrou tipo", e.response.data);
             toastr.error("Erro", e.response.data);
           }
         } else {
@@ -47,7 +46,6 @@ export function validateToken(token) {
       axios
         .post(`${consts.API_URL}/validateToken`, { token })
         .then((resp) => {
-          console.log("TOKEN_VALIDATED: ", resp.data);
           dispatch({ type: "TOKEN_VALIDATED", payload: resp.data });
         })
         .catch((e) => dispatch({ type: "TOKEN_VALIDATED", payload: false }));

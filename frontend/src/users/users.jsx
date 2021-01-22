@@ -41,7 +41,7 @@ class Users extends Component {
                                     submitLabel='Incluir' submitClass='primary' />
                             </TabContent>
                             <TabContent id='tabUpdate'>
-                                <Form onSubmit={this.props.update}
+                                <Form onSubmit={this.props.update} blockItens={['login']}
                                     submitLabel='Alterar' submitClass='info' />
                             </TabContent>
                             <TabContent id='tabDelete'>

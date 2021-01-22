@@ -5,6 +5,7 @@ import { reduxForm, Field, formValueSelector } from 'redux-form'
 
 import { init } from './usersActions'
 import LabelAndInput from '../common/form/labelAndInput'
+import InputReadOnlyElement from '../common/form/inputReadOnlyElement'
 import Row from '../common/layout/row'
 // import ItemList from './itemList'
 
@@ -12,7 +13,7 @@ import Row from '../common/layout/row'
 class UsersForm extends Component {
 
     render() {
-        const { handleSubmit, readOnly, id, nome, login, senha, admin } = this.props
+        const { handleSubmit, readOnly, blockItens, id, nome, login, senha, admin } = this.props
         return (
             <form role='form' onSubmit={handleSubmit}>
                 <div className='box-body'>
@@ -21,7 +22,7 @@ class UsersForm extends Component {
                             label='Nome' cols='12 4' placeholder='Informe o nome' />
                     </Row>
                     <Row>
-                        <Field name='login' component={LabelAndInput} readOnly={readOnly}
+                        <Field name='login' component={InputReadOnlyElement} readOnly={readOnly} blockItens={blockItens}
                             label='Login' cols='12 4' placeholder='Informe o login' />
                     </Row>
                     <Row>

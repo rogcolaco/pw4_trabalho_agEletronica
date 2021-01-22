@@ -51,9 +51,11 @@ module.exports = (app) => {
         if (new Date(token.exp * 1000) > new Date()) {
           return res.send(true);
         }
+        return res.send(401).send(false);
       }
     } catch (e) {
       console.log("Problema na validação do token!");
+      res.send(500).send(false);
     }
   };
 
