@@ -55,7 +55,7 @@ module.exports = (app) => {
       }
     } catch (e) {
       console.log("Problema na validação do token!");
-      res.send(500).send(false);
+      res.status(500).send(false);
     }
   };
 
