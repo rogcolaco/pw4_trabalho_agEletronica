@@ -133,7 +133,7 @@ module.exports = (app) => {
     .all(app.config.passport.authenticate())
     .post(
       [
-        body("data", "A data é obrigatória)").trim().isLength({ min: 19 }),
+        body("data", "A data é obrigatória)").trim().isLength({ min: 16 }),
         body("obs").trim(),
         body("participantes").trim(),
         body("endereco").trim(),
@@ -146,7 +146,7 @@ module.exports = (app) => {
         );
         const erros = validationResult(req);
         if (!erros.isEmpty()) {
-          res.send(erros.array());
+          res.status(409).send(erros.array());
         } else {
           const resultado = await banco.insereCompromisso({
             data: req.body.data,
@@ -169,7 +169,7 @@ module.exports = (app) => {
         body("id", "O id do compromisso é obrigatório!")
           .trim()
           .isLength({ min: 1 }),
-        body("data", "A data é obrigatória!").trim().isLength({ min: 19 }),
+        body("data", "A data é obrigatória!").trim().isLength({ min: 16 }),
         body("obs").trim(),
         body("participantes").trim(),
         body("endereco").trim(),
@@ -182,7 +182,7 @@ module.exports = (app) => {
         );
         const erros = validationResult(req);
         if (!erros.isEmpty()) {
-          res.send(erros.array());
+          res.status(409).send(erros.array());
         } else {
           const resultado = await banco.alteraCompromisso({
             id: req.body.id,
@@ -199,25 +199,18 @@ module.exports = (app) => {
     );
 
   app
-    .route("/excluirCompromisso")
+    .route(`/excluirCompromisso/:id?`)
     .all(app.config.passport.authenticate())
-    .delete(
-      [
-        body("id", "O id do compromisso é obrigatório.")
-          .trim()
-          .isLength({ min: 1 }),
-      ],
-      async (req, res) => {
-        console.log("rota utilizada quando o usuário excluir um compromisso");
-        const erros = validationResult(req);
-        if (!erros.isEmpty()) {
-          res.send(erros.array());
-        } else {
-          const resultado = await banco.excluiCompromisso(req.body.id);
-          res.send(resultado);
-        }
+    .delete(async (req, res) => {
+      console.log("rota utilizada quando o usuário excluir um compromisso");
+      const erros = validationResult(req);
+      if (req.params.id) {
+        const resultado = await banco.excluiCompromisso(req.params.id);
+        res.send(resultado);
+      } else {
+        res.status(409).send("Necessário informar um id para exclusão!");
       }
-    );
+    });
 
   app
     .route("/selecionarCompromisso/:id?")
@@ -228,7 +221,7 @@ module.exports = (app) => {
         const resultado = await banco.selecionaCompromisso(req.params.id);
         res.send(resultado);
       } else {
-        res.send("Favor informar um id de compromisso válido!");
+        res.status(409).send("Favor informar um id de compromisso válido!");
       }
     });
 
@@ -243,7 +236,7 @@ module.exports = (app) => {
         const resultado = await banco.listaTodosCompromissos(req.params.id);
         res.send(resultado);
       } else {
-        res.send("Favor informar um id de usuário válida!");
+        res.status(409).send("Favor informar um id de usuário válida!");
       }
     });
 
